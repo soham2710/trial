@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Vehicle Sales Dashboard</title>
+    <link rel="stylesheet" href="/static/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>🚗 Vehicle Sales Dashboard</h1>
+                <p class="subtitle">Sign In</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        placeholder="Enter your username"
+                        class="input-field"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        placeholder="Enter your password"
+                        class="input-field"
+                    >
+                </div>
+
+                <div id="error-message" class="error-message" style="display: none;"></div>
+
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+            </div>
+        </div>
+
+        <div class="auth-illustration">
+            <div class="illustration-content">
+                <h2>Welcome Back</h2>
+                <p>Manage your vehicle inventory and analytics with ease</p>
+                <ul class="features">
+                    <li>📊 Real-time Analytics</li>
+                    <li>🤖 AI-Powered Insights</li>
+                    <li>🔐 Secure & Fast</li>
+                    <li>📱 Fully Responsive</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if (localStorage.getItem('access_token')) {
+            window.location.href = '/';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            errorMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Store token in localStorage
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('username', data.username);
+                    
+                    // Redirect to dashboard
+                    window.location.href = '/';
+                } else {
+                    const error = await response.json();
+                    errorMessage.textContent = error.detail || 'Login failed. Please try again.';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorMessage.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

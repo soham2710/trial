@@ -14,6 +14,10 @@
                 <h1>🚗 Vehicle Sales Dashboard</h1>
                 <p class="subtitle">Manage and analyze your vehicle inventory</p>
             </div>
+            <div class="header-user">
+                <span id="username-display">Loading...</span>
+                <button class="btn btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
         </header>
 
         <!-- Navigation -->
@@ -57,7 +61,7 @@
                         <input 
                             type="text" 
                             id="analysis-query" 
-                            placeholder="Ask anything about our vehicle inventory... (e.g., 'Which vehicle offers best value?')"
+                            placeholder="Ask anything about your vehicle inventory... (e.g., 'Which vehicle offers best value?')"
                             class="input-field"
                         >
                         <button onclick="analyzeQuery()" class="btn btn-primary">Analyze with Mistral AI</button>
