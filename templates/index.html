@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Sales Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🚗 Vehicle Sales Dashboard</h1>
+                <p class="subtitle">Manage and analyze your vehicle inventory</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-items">
+                <button class="nav-btn active" onclick="showSection('dashboard')">Dashboard</button>
+                <button class="nav-btn" onclick="showSection('inventory')">Inventory</button>
+                <button class="nav-btn" onclick="showSection('analytics')">Analytics</button>
+                <button class="nav-btn" onclick="showSection('add-vehicle')">Add Vehicle</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <h2>Sales Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Vehicles</h3>
+                        <p class="stat-value" id="total-vehicles">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Average Price</h3>
+                        <p class="stat-value" id="avg-price">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Inventory Value</h3>
+                        <p class="stat-value" id="total-value">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Price Range</h3>
+                        <p class="stat-value" id="price-range">-</p>
+                    </div>
+                </div>
+
+                <!-- Quick Analytics with Mistral -->
+                <div class="analytics-box">
+                    <h3>AI-Powered Sales Analysis</h3>
+                    <div class="query-section">
+                        <input 
+                            type="text" 
+                            id="analysis-query" 
+                            placeholder="Ask anything about our vehicle inventory... (e.g., 'Which vehicle offers best value?')"
+                            class="input-field"
+                        >
+                        <button onclick="analyzeQuery()" class="btn btn-primary">Analyze with Mistral AI</button>
+                    </div>
+                    <div id="analysis-result" class="result-box" style="display: none;">
+                        <h4>Analysis Result:</h4>
+                        <p id="analysis-text"></p>
+                    </div>
+                    <div id="analysis-loading" class="loading" style="display: none;">
+                        <p>Analyzing with Mistral AI...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Section -->
+            <section id="inventory" class="section">
+                <h2>Vehicle Inventory</h2>
+                <div id="vehicles-list" class="vehicles-grid">
+                    <!-- Vehicles will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <h2>Advanced Analytics</h2>
+                <div class="analytics-container">
+                    <div class="chart-placeholder">
+                        <h3>Price Distribution</h3>
+                        <p>Visual charts would display here</p>
+                        <div id="price-distribution" class="distribution-bar"></div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <h3>Inventory by Year</h3>
+                        <p>Year-wise breakdown</p>
+                        <div id="year-distribution" class="distribution-bar"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add Vehicle Section -->
+            <section id="add-vehicle" class="section">
+                <h2>Add New Vehicle</h2>
+                <form class="form-container" onsubmit="handleAddVehicle(event)">
+                    <div class="form-group">
+                        <label for="vehicle-name">Vehicle Name:</label>
+                        <input type="text" id="vehicle-name" required class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-price">Price ($):</label>
+                        <input type="number" id="vehicle-price" required max="999999" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-year">Year:</label>
+                        <input type="number" id="vehicle-year" required min="1990" max="2099" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-mileage">Mileage (miles):</label>
+                        <input type="number" id="vehicle-mileage" required min="0" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-color">Color:</label>
+                        <input type="text" id="vehicle-color" required class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-description">Description:</label>
+                        <textarea id="vehicle-description" class="input-field" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Vehicle</button>
+                </form>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Vehicle Sales Dashboard | Powered by FastAPI & Mistral AI</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
